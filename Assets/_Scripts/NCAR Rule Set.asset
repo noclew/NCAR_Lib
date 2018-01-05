@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffdf6cf0c622247aab660c9c2ef07ac0, type: 3}
+  m_Name: NCAR Rule Set
+  m_EditorClassIdentifier: 
+  rules:
+  - pairWiseConditions:
+    - deligateIndex: 0
+      target1Index: 3
+      target2Index: 0
+    - deligateIndex: 1
+      target1Index: 0
+      target2Index: 0
+    showEvents:
+    - modelIndices: 0000000001000000
+      targetIndex: 0
+    - modelIndices: 020000000300000004000000
+      targetIndex: 0
+  - pairWiseConditions:
+    - deligateIndex: 0
+      target1Index: 1
+      target2Index: 1
+    showEvents:
+    - modelIndices: 0100000001000000
+      targetIndex: 2

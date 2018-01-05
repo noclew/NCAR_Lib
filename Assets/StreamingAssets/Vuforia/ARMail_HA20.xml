@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
+  <Tracking>
+    <ImageTarget name="HA20-01" size="100.000000 150.000000" />
+    <ImageTarget name="HA20-02" size="100.000000 150.000000" />
+    <ImageTarget name="HA20-03" size="100.000000 150.000000" />
+    <ImageTarget name="HA20-04" size="100.000000 150.000000" />
+    <ImageTarget name="HA20-05" size="100.000000 150.000000" />
+    <ImageTarget name="cutter" size="80.000000 80.000000" />
+  </Tracking>
+</QCARConfig>

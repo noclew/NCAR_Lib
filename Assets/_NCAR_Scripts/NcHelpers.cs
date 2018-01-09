@@ -8,7 +8,12 @@ namespace noclew
 {	
 	public static class NcHelpers
 	{
-		
+
+		static GameObject[] FindSceneObjectsByTag(){
+			GameObject[] res = GameObject.FindGameObjectsWithTag ("NCAR_model");
+			return res;
+		}
+
 
 		/// <summary>
 		/// Finds all AR models labelled as "NCAR_model"
@@ -16,7 +21,7 @@ namespace noclew
 		/// <returns>The all AR models.</returns>
 		/// <param name="isGuid">If set to <c>true</c> is GUID.</param>
 
-		public static string[] FindAllARModels(bool isGuid=false){		
+		public static string[] FindAllARAssetModels(bool isGuid=false){		
 			string[] GuidList = AssetDatabase.FindAssets ("l:NCAR_model");
 
 			if (isGuid) {

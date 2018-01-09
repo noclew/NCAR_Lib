@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 23288184944695066}
   m_Layer: 0
   m_Name: m05
-  m_TagString: Untagged
+  m_TagString: NCAR_model
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

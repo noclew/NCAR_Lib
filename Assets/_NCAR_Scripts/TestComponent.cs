@@ -4,6 +4,7 @@ using UnityEngine;
 using noclew;
 
 public class TestComponent : MonoBehaviour {
+	public int[] defaultSetting;
 	public ARRuleTemplate[] rules;
 
 	// Use this for initialization

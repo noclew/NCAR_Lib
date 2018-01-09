@@ -51,14 +51,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\_Scripts\MyScript.cs" />
-     <Compile Include="Assets\_Scripts\NCARClasses.cs" />
-     <Compile Include="Assets\_Scripts\NCARmodelController.cs" />
-     <Compile Include="Assets\_Scripts\NCARRuleSet.cs" />
-     <Compile Include="Assets\_Scripts\NCARTrackableEventHandler.cs" />
-     <Compile Include="Assets\_Scripts\NcHelpers.cs" />
-     <Compile Include="Assets\_Scripts\TestComponent.cs" />
-     <Compile Include="Assets\NCARMainController.cs" />
+     <Compile Include="Assets\_NCAR_Scripts\NCARClasses.cs" />
+     <Compile Include="Assets\_NCAR_Scripts\NCARMainController.cs" />
+     <Compile Include="Assets\_NCAR_Scripts\NCARModelController.cs" />
+     <Compile Include="Assets\_NCAR_Scripts\NCARRuleSet.cs" />
+     <Compile Include="Assets\_NCAR_Scripts\NCARTrackableEventHandler.cs" />
+     <Compile Include="Assets\_NCAR_Scripts\NcHelpers.cs" />
+     <Compile Include="Assets\_NCAR_Scripts\TestComponent.cs" />
+     <Compile Include="Assets\_NCAR_Scripts\testStatic.cs" />
      <Compile Include="Assets\Vuforia\Scripts\DefaultInitializationErrorHandler.cs" />
      <Compile Include="Assets\Vuforia\Scripts\DefaultTrackableEventHandler.cs" />
      <None Include="Assets\Vuforia\Shaders\ColoredLines.shader" />

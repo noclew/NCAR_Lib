@@ -1,11 +1,3 @@
-/*==============================================================================
-Copyright (c) 2017 PTC Inc. All Rights Reserved.
-
-Copyright (c) 2010-2014 Qualcomm Connected Experiences, Inc.
-All Rights Reserved.
-Confidential and Proprietary - Protected under copyright and other laws.
-==============================================================================*/
-
 using UnityEngine;
 using Vuforia;
 
@@ -18,6 +10,11 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
 	Vector3 initLocal;
 	Quaternion initRot;
 	bool isTracking = false;
+
+
+	Vector3 posInit;
+	Vector3 scaleInit;
+	Quaternion rotInit;
 	/// 
 	#region PRIVATE_MEMBER_VARIABLES
 
@@ -29,12 +26,19 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
 
 	protected virtual void Start ()
 	{
+		//save the default pos and rot
+		posInit = transform.position;
+		rotInit = transform.rotation;
+		scaleInit = transform.lossyScale;
+
 		if (testobj) {
 			testobj = Instantiate (testobj);
-			initLocal = this.transform.InverseTransformPoint (testobj.transform.position);
+			//initLocal = this.transform.InverseTransformPoint (testobj.transform.position);
+			initLocal = Quaternion.Inverse(this.transform.rotation) * (testobj.transform.position-this.transform.position);
+			initLocal = Vector3.Scale (new Vector3 (1 / this.transform.lossyScale.x, 1 / this.transform.lossyScale.y, 1 / this.transform.lossyScale.z), initLocal);
 			initRot = testobj.transform.rotation;
-		}
 
+		}
 
 
 		mTrackableBehaviour = GetComponent<TrackableBehaviour> ();

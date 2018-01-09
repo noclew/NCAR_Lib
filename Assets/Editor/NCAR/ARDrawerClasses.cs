@@ -15,7 +15,7 @@ namespace noclew
 		public override void OnGUI (Rect pos, SerializedProperty prop, GUIContent label)
 		{
 			//refresh AR database
-			ARappDB.rebuild ();
+			ARappDB.Rebuild ();
 
 			//ArCondition의 property
 			SerializedProperty target1 = prop.FindPropertyRelative ("target1Index");
@@ -118,7 +118,7 @@ namespace noclew
 		//GUI for property drawer. Calld by Unity
 		public override void OnGUI (Rect pos, SerializedProperty prop, GUIContent label)
 		{
-			prop.intValue = EditorGUI.Popup (pos, prop.intValue, ARappDB.modelNames);
+			prop.intValue = EditorGUI.Popup (pos, prop.intValue, ARappDB.sceneModelNames);
 		}
 
 	}

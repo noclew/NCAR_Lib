@@ -75,10 +75,14 @@ namespace noclew
 	/// <summary>
 	/// this class includes all the targets, models, conditions and events.
 	/// </summary>
+	[InitializeOnLoad]
 	public static class ARappDB {
 
-		public static string[] modelGuis;
-		public static string[] modelNames;
+		public static GameObject[] sceneModels;
+		public static string[] sceneModelNames;
+
+		public static string[] assetModelGuis;
+		public static string[] assetModelNames;
 		public static GameObject[] target;					//targets as game objects
 		public static string[] targetNames; 				//Name of the target objects
 		public static MethodInfo[] conditions;				//Methodsinfo of condition list specified in ARTargetCondition
@@ -86,18 +90,24 @@ namespace noclew
 		public static Func<GameObject, GameObject, bool>[] conditionDeligates;  //TargetCondition Deletages
 
 		static ARappDB(){
-			rebuild ();
+			Rebuild ();
+			//TrackSceneChange ();
+			Debug.Log ("-->DB inited");
 		}
 
 		/// <summary>
 		/// rebuild ar database
 		/// </summary>
-		public static void rebuild(){
+		public static void Rebuild(){
+			//get all scene models and their names
+			sceneModels = GameObject.FindGameObjectsWithTag ("NCAR_model");
+			sceneModelNames = ARappDB.sceneModels.Select (p => p.name).ToArray ();
+
 			//get all the model guis
-			modelGuis = NcHelpers.FindAllARModels(isGuid:true);
+			assetModelGuis = NcHelpers.FindAllARAssetModels(isGuid:true);
 
 			//get all the model names
-			modelNames = NcHelpers.FindAllARModels(isGuid:false);
+			assetModelNames = NcHelpers.FindAllARAssetModels(isGuid:false);
 
 			//get all the target object
 			target = NcHelpers.FindAllARTargets();
@@ -113,6 +123,20 @@ namespace noclew
 
 			//get all the conditiondeligates
 			conditionDeligates = ARappDB.conditions.Select (p => (Func<GameObject, GameObject, bool>) System.Delegate.CreateDelegate (typeof(Func<GameObject, GameObject, bool>), null, p)).ToArray();
+		}
+
+		static void TrackSceneChange()
+		{
+			EditorApplication.hierarchyWindowChanged += RebuidModelDB;
+		}
+
+		static void UntrackSceneChange()
+		{
+			EditorApplication.hierarchyWindowChanged -= RebuidModelDB;
+		}
+
+		static void RebuidModelDB(){
+			Debug.Log ("-->S changed");
 		}
 	}
 
@@ -159,7 +183,7 @@ namespace noclew
 		public ARObjectList ()
 		{
 			Debug.Log ("Dd");
-			this.items = NcHelpers.FindAllARModels ();
+			this.items = NcHelpers.FindAllARAssetModels ();
 		}
 	}
 

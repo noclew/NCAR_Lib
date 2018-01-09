@@ -1,15 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using noclew;
 using Vuforia;
 
-public class NCARTrackableEventHandler : MonoBehaviour, ITrackableEventHandler {
+public class NCARTrackableEventHandler : MonoBehaviour, ITrackableEventHandler
+{
 
 	//custom variables
 	ImageTargetBehaviour vImageTargetBehavior;
 
 	public int targetIndex { get; set; }
+
 	bool isBeingTracked = false;
 	Vector3 ptTopLeft;
 	Vector3 ptTopRight;
@@ -19,74 +21,100 @@ public class NCARTrackableEventHandler : MonoBehaviour, ITrackableEventHandler {
 	float targetHeight;
 	float targetWidth;
 
-	public Vector3 wTopLeft
-	{
-		get { return this.transform.TransformPoint(ptTopLeft); }
+	Vector3 posTargetInit;
+	Vector3 scaleTargetInit;
+	Quaternion rotTargetInit;
+
+
+	//test
+	public NCARModelController testobj;
+	//
+
+	public Vector3 wTopLeft {
+		get { return this.transform.TransformPoint (ptTopLeft); }
 	}
-	public Vector3 wTopRight
-	{
-		get { return this.transform.TransformPoint(ptTopRight); }
+
+	public Vector3 wTopRight {
+		get { return this.transform.TransformPoint (ptTopRight); }
 	}
-	public Vector3 wBottomLeft
-	{
-		get { return this.transform.TransformPoint(ptBottomLeft); }
+
+	public Vector3 wBottomLeft {
+		get { return this.transform.TransformPoint (ptBottomLeft); }
 	}
-	public Vector3 wBottomRight
-	{
-		get { return this.transform.TransformPoint(ptBottomRight); }
+
+	public Vector3 wBottomRight {
+		get { return this.transform.TransformPoint (ptBottomRight); }
 	}
-	public float TargetWidth
-	{
+
+	public float TargetWidth {
 		get { return targetWidth; }
 	}
-	public float TargetHeight
-	{
+
+	public float TargetHeight {
 		get { return targetHeight; }
 	}
 
-	public bool IsBeingTracked
-	{
+	public bool IsBeingTracked {
 		get { return isBeingTracked; }
 	}
 
 	#region PRIVATE_MEMBER_VARIABLES
+
 	protected TrackableBehaviour mTrackableBehaviour;
+
 	#endregion // PRIVATE_MEMBER_VARIABLES
 
 	#region UNTIY_MONOBEHAVIOUR_METHODS
 
 	// Use this for initialization
 
-	void Awake() {
+	void Awake ()
+	{
 		vImageTargetBehavior = GetComponent<ImageTargetBehaviour> ();	
 	}
 
-	protected virtual void Start () {
+	GameObject c;
+
+	protected virtual void Start ()
+	{
+
 		//save the default pos and rot
-
-
+		posTargetInit = transform.position;
+		rotTargetInit = transform.rotation;
+		scaleTargetInit = transform.lossyScale;
+			
+		mTrackableBehaviour = GetComponent<TrackableBehaviour> ();
 		if (mTrackableBehaviour) {
 			mTrackableBehaviour.RegisterTrackableEventHandler (this);
 		}
 
+
+
 		///NCAR code
-		targetHeight = vImageTargetBehavior.GetSize()[1];
-		targetWidth = vImageTargetBehavior.GetSize()[0];
+		targetHeight = vImageTargetBehavior.GetSize () [1];
+		targetWidth = vImageTargetBehavior.GetSize () [0];
 
-		ptTopRight = new Vector3(0.5f * (targetWidth / targetHeight), 0, 0.5f);
-		ptTopLeft = new Vector3(-0.5f * (targetWidth / targetHeight), 0, 0.5f);
-		ptBottomRight = new Vector3(0.5f * (targetWidth / targetHeight), 0, -0.5f);
-		ptBottomLeft = new Vector3(-0.5f * (targetWidth / targetHeight), 0, -0.5f);
+		ptTopRight = new Vector3 (0.5f * (targetWidth / targetHeight), 0, 0.5f);
+		ptTopLeft = new Vector3 (-0.5f * (targetWidth / targetHeight), 0, 0.5f);
+		ptBottomRight = new Vector3 (0.5f * (targetWidth / targetHeight), 0, -0.5f);
+		ptBottomLeft = new Vector3 (-0.5f * (targetWidth / targetHeight), 0, -0.5f);
 
-		GameObject c = GameObject.CreatePrimitive (PrimitiveType.Cube);
+
+
+		/////delete below
+		c = GameObject.CreatePrimitive (PrimitiveType.Cube);
 		c.transform.SetParent (transform);
 		c.transform.localPosition = ptTopLeft;
-		c.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
+		c.transform.localScale = new Vector3 (0.05f, 0.05f, 0.05f);
 
 	}
+			
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
+		if (testobj)
+			testCalc (testobj);
 	}
 
 	#endregion // UNTIY_MONOBEHAVIOUR_METHODS
@@ -102,13 +130,13 @@ public class NCARTrackableEventHandler : MonoBehaviour, ITrackableEventHandler {
 		TrackableBehaviour.Status newStatus)
 	{
 		if (newStatus == TrackableBehaviour.Status.DETECTED ||
-			newStatus == TrackableBehaviour.Status.TRACKED ||
-			newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED) {
+		     newStatus == TrackableBehaviour.Status.TRACKED ||
+		     newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED) {
 			Debug.Log ("Trackable " + mTrackableBehaviour.TrackableName + " found");
 			isBeingTracked = true;
 			OnTrackingFound ();
 		} else if (previousStatus == TrackableBehaviour.Status.TRACKED &&
-			newStatus == TrackableBehaviour.Status.NOT_FOUND) {
+		            newStatus == TrackableBehaviour.Status.NOT_FOUND) {
 			Debug.Log ("Trackable " + mTrackableBehaviour.TrackableName + " lost");
 			isBeingTracked = false;
 			OnTrackingLost ();
@@ -150,6 +178,7 @@ public class NCARTrackableEventHandler : MonoBehaviour, ITrackableEventHandler {
 
 	protected virtual void OnTrackingLost ()
 	{
+		print ("Dxxxxxxxxxxxxxxxxxxxxxxxx");
 		////////////VuforiaDefault disabled.
 //		var rendererComponents = GetComponentsInChildren<Renderer> (true);
 //		var colliderComponents = GetComponentsInChildren<Collider> (true);
@@ -169,5 +198,26 @@ public class NCARTrackableEventHandler : MonoBehaviour, ITrackableEventHandler {
 
 	}
 
+	/// <summary>
+	/// Calculates the initial local posistion of a model in relation to this target.
+	/// </summary>
+	/// <returns>The initial local poss.</returns>
+	/// <param name="modelPos">Model position.</param>
+	public Vector3 CalcInitialLocalPosOfModel (Vector3 posModelInit)
+	{
+		Vector3 t = Quaternion.Inverse (rotTargetInit) * (posModelInit - posTargetInit);
+		t = Vector3.Scale (new Vector3 (1 / scaleTargetInit.x, 1 / scaleTargetInit.y, 1 / this.scaleTargetInit.z), t);
+		return t;
+	}
+
+	public void testCalc (NCARModelController model)
+	{
+		Transform trans = model.transform;
+		Vector3 initLocal = CalcInitialLocalPosOfModel (model.posInit);
+		trans.SetPositionAndRotation (transform.TransformPoint (initLocal), model.rotInit * this.transform.rotation);
+		trans.SetParent (this.transform);
+	}
+
 	#endregion // PRIVATE_METHODS
 }
+

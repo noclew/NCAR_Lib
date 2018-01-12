@@ -6,7 +6,6 @@ using Vuforia;
 /// </summary>
 public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandler
 {
-	public GameObject testobj;
 	Vector3 initLocal;
 	Quaternion initRot;
 	bool isTracking = false;
@@ -31,14 +30,6 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
 		rotInit = transform.rotation;
 		scaleInit = transform.lossyScale;
 
-		if (testobj) {
-			testobj = Instantiate (testobj);
-			//initLocal = this.transform.InverseTransformPoint (testobj.transform.position);
-			initLocal = Quaternion.Inverse(this.transform.rotation) * (testobj.transform.position-this.transform.position);
-			initLocal = Vector3.Scale (new Vector3 (1 / this.transform.lossyScale.x, 1 / this.transform.lossyScale.y, 1 / this.transform.lossyScale.z), initLocal);
-			initRot = testobj.transform.rotation;
-
-		}
 
 
 		mTrackableBehaviour = GetComponent<TrackableBehaviour> ();
@@ -49,13 +40,6 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
 
 	void Update ()
 	{
-		if (testobj && isTracking) {
-//			testobj.transform.rotation = initRot * this.transform.rotation;
-//			testobj.transform.position = transform.TransformPoint (initLocal);
-			testobj.transform.SetPositionAndRotation (transform.TransformPoint (initLocal), initRot * this.transform.rotation);
-			testobj.transform.SetParent (this.transform);
-
-		}
 	}
 
 	#endregion // UNTIY_MONOBEHAVIOUR_METHODS
@@ -113,7 +97,6 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
 		foreach (var component in canvasComponents)
 			component.enabled = true;
 		
-		if(testobj) testobj.GetComponent<Renderer> ().enabled = true;
 	}
 
 
@@ -134,8 +117,6 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
 		// Disable canvas':
 		foreach (var component in canvasComponents)
 			component.enabled = false;
-
-		if(testobj) testobj.GetComponent<Renderer> ().enabled = false;
 	}
 
 	#endregion // PRIVATE_METHODS

@@ -51,13 +51,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\_NCAR_Scripts\NCARAppDb.cs" />
      <Compile Include="Assets\_NCAR_Scripts\NCARClasses.cs" />
      <Compile Include="Assets\_NCAR_Scripts\NCARMainController.cs" />
-     <Compile Include="Assets\_NCAR_Scripts\NCARModelController.cs" />
+     <Compile Include="Assets\_NCAR_Scripts\NCARModelData.cs" />
      <Compile Include="Assets\_NCAR_Scripts\NCARRuleSet.cs" />
+     <Compile Include="Assets\_NCAR_Scripts\NCARTargetCondition.cs" />
      <Compile Include="Assets\_NCAR_Scripts\NCARTrackableEventHandler.cs" />
      <Compile Include="Assets\_NCAR_Scripts\NcHelpers.cs" />
-     <Compile Include="Assets\_NCAR_Scripts\TestComponent.cs" />
+     <Compile Include="Assets\_NCAR_Scripts\testScript.cs" />
      <Compile Include="Assets\_NCAR_Scripts\testStatic.cs" />
      <Compile Include="Assets\Vuforia\Scripts\DefaultInitializationErrorHandler.cs" />
      <Compile Include="Assets\Vuforia\Scripts\DefaultTrackableEventHandler.cs" />

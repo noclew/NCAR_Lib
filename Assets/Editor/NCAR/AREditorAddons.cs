@@ -21,6 +21,7 @@ namespace noclew
 		public static void FindAllARCards ()
 		{
 			string[] cardList = NcHelpers.FindAllARTargetNames ();
+
 			foreach (string name in cardList)
 				Debug.Log (name);
 		}

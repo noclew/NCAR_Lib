@@ -5,14 +5,16 @@ using UnityEngine;
 namespace noclew
 {
 
-	public class NCARModelController : MonoBehaviour
+	public class NCARModelData : MonoBehaviour
 	{
 		public Vector3 posInit { get; set;}
 		public Quaternion rotInit{ get; set;}
 		public Vector2 scaleInit {get; set;}
 
 		public bool isTriggered {get; set;}
-		public int targetAttached { get; set; }
+
+		public GameObject targetAttached { get; set; }
+		public GameObject defaultTargetAttached = null;
 
 		// Use this for initialization
 		void Start ()

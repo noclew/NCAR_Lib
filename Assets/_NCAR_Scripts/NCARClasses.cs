@@ -20,10 +20,10 @@ namespace noclew
 			rr
 		}
 
-		[ARObjectList()]
+		[ARObjectList ()]
 		public string card01;
 		public states relation;
-		[ARObjectList()]
+		[ARObjectList ()]
 		public string card02;
 	}
 
@@ -32,129 +32,62 @@ namespace noclew
 	/// <summary>
 	/// The conditions.
 	/// </summary>
-	[System.Serializable]
-	[CanEditMultipleObjects]
-	public class ARRule : ScriptableObject
-	{
-		public ARTargetConditionTemplate[] conditions;
-		public string events;
-	}
 
 	[System.Serializable]
 	public class ARTargetConditionTemplate
 	{
 		public int deligateIndex;
-		public int target1Index;
-		public int target2Index;
+		public string target1Name;
+		public string target2Name;
 	}
 
 	[System.Serializable]
-	public class ARShowEventTemplate{
-		[modelIndicesAttribute]
-		public int[] modelIndices;
-		public int targetIndex;
+	public class NCARShowEventTemplate
+	{
+		[ModelNameAttribute]
+		public string[] modelNames;
+		public string targetName;
 	}
 
 	[System.Serializable]
-	public class ARRuleTemplate{
+	public class NCARHideEventTemplate
+	{
+		//[ModelNameAttribute]
+		public string targetName;
+	}
+
+	[System.Serializable]
+	public class ARRuleTemplate
+	{
 		public ARTargetConditionTemplate[] pairWiseConditions;
-		public ARShowEventTemplate[] showEvents; 
+		public NCARShowEventTemplate[] showEvents;
+		public NCARHideEventTemplate[] hideEvents;
 	}
-		
+
+	[System.Serializable]
+	public class ARDefaultStateTemplate
+	{
+		public string ModelName;
+		public string TargetName;	
+	}
 	//test attr
-	public class modelIndicesAttribute : PropertyAttribute {
-		public modelIndicesAttribute(){
+	public class ModelNameAttribute : PropertyAttribute
+	{
+		public ModelNameAttribute ()
+		{
 
 		}
 	}
 
 	//did not use for speed
-	public delegate bool delCondition(GameObject target1, GameObject target2);
+	public delegate bool delCondition (GameObject target1, GameObject target2);
 
 
 	/// <summary>
 	/// this class includes all the targets, models, conditions and events.
 	/// </summary>
-	[InitializeOnLoad]
-	public static class ARappDB {
 
-		public static GameObject[] sceneModels;
-		public static string[] sceneModelNames;
-
-		public static string[] assetModelGuis;
-		public static string[] assetModelNames;
-		public static GameObject[] target;					//targets as game objects
-		public static string[] targetNames; 				//Name of the target objects
-		public static MethodInfo[] conditions;				//Methodsinfo of condition list specified in ARTargetCondition
-		public static string[] conditionNames;				//List of condition function names;
-		public static Func<GameObject, GameObject, bool>[] conditionDeligates;  //TargetCondition Deletages
-
-		static ARappDB(){
-			Rebuild ();
-			//TrackSceneChange ();
-			Debug.Log ("-->DB inited");
-		}
-
-		/// <summary>
-		/// rebuild ar database
-		/// </summary>
-		public static void Rebuild(){
-			//get all scene models and their names
-			sceneModels = GameObject.FindGameObjectsWithTag ("NCAR_model");
-			sceneModelNames = ARappDB.sceneModels.Select (p => p.name).ToArray ();
-
-			//get all the model guis
-			assetModelGuis = NcHelpers.FindAllARAssetModels(isGuid:true);
-
-			//get all the model names
-			assetModelNames = NcHelpers.FindAllARAssetModels(isGuid:false);
-
-			//get all the target object
-			target = NcHelpers.FindAllARTargets();
-
-			//get all the target names
-			targetNames = ARappDB.target.Select(p => p.gameObject.name).ToArray ();
-
-			//get all the conditions as methodinfo
-			conditions = typeof(ARTargetCondition).GetMethods(BindingFlags.Public | BindingFlags.Static);
-
-			//get all the condition function names
-			conditionNames = ARappDB.conditions.Select (p => p.Name).ToArray (); 
-
-			//get all the conditiondeligates
-			conditionDeligates = ARappDB.conditions.Select (p => (Func<GameObject, GameObject, bool>) System.Delegate.CreateDelegate (typeof(Func<GameObject, GameObject, bool>), null, p)).ToArray();
-		}
-
-		static void TrackSceneChange()
-		{
-			EditorApplication.hierarchyWindowChanged += RebuidModelDB;
-		}
-
-		static void UntrackSceneChange()
-		{
-			EditorApplication.hierarchyWindowChanged -= RebuidModelDB;
-		}
-
-		static void RebuidModelDB(){
-			Debug.Log ("-->S changed");
-		}
-	}
-
-	[System.Serializable]
-	public static class ARTargetCondition {
-		public static bool IsPerpTo(GameObject target1, GameObject target2){
-			Debug.Log ("c1 ran");
-			return true;
-		}
-		public static bool IsleftTo(GameObject target1, GameObject target2){
-			Debug.Log ("c2 ran");
-			return true;
-		}
-		public static bool IsOnTopOf(GameObject target1, GameObject target2){
-			Debug.Log ("c2 ran");
-			return true;
-		}
-	}
+		
 
 
 

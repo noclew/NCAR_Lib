@@ -11,23 +11,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffdf6cf0c622247aab660c9c2ef07ac0, type: 3}
   m_Name: NCAR Rule Set
   m_EditorClassIdentifier: 
+  angleThreshold: 20
+  distanceThreshold: 10
+  defaultStates:
+  - ModelName: mm01
+    TargetName: t01
+  - ModelName: mm02
+    TargetName: t02
+  - ModelName: mm03
+    TargetName: t03
+  - ModelName: mm04
+    TargetName: t04
   rules:
   - pairWiseConditions:
-    - deligateIndex: 0
-      target1Index: 3
-      target2Index: 0
     - deligateIndex: 1
-      target1Index: 0
-      target2Index: 0
+      target1Name: t01
+      target2Name: t02
     showEvents:
-    - modelIndices: 0000000001000000
-      targetIndex: 0
-    - modelIndices: 020000000300000004000000
-      targetIndex: 0
-  - pairWiseConditions:
-    - deligateIndex: 0
-      target1Index: 1
-      target2Index: 1
-    showEvents:
-    - modelIndices: 0100000001000000
-      targetIndex: 2
+    - modelNames:
+      - long
+      targetName: t01
+    hideEvents: []

@@ -9,7 +9,7 @@ namespace noclew
 	public static class NcHelpers
 	{
 
-		static GameObject[] FindSceneObjectsByTag(){
+		public static GameObject[] FindAllSceneModelsByTag(){
 			GameObject[] res = GameObject.FindGameObjectsWithTag ("NCAR_model");
 			return res;
 		}

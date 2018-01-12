@@ -42,7 +42,7 @@ namespace noclew
 		/// </summary>
 		/// <returns>The array of a gameObject containing AR handler.</returns>
 		public static GameObject[] FindAllARTargets(){
-			DefaultTrackableEventHandler[] temp = UnityEngine.Object.FindObjectsOfType<DefaultTrackableEventHandler>();
+			NCARTrackableEventHandler[] temp = UnityEngine.Object.FindObjectsOfType<NCARTrackableEventHandler>();
 			var res = temp.Select(p => p.gameObject).ToArray ();
 			return res;
 		}

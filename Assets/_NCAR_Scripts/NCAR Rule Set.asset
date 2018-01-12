@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: NCAR Rule Set
   m_EditorClassIdentifier: 
   angleThreshold: 20
-  distanceThreshold: 10
+  distanceThreshold: 30
   defaultStates:
   - ModelName: mm01
     TargetName: t01
@@ -22,13 +22,42 @@ MonoBehaviour:
     TargetName: t03
   - ModelName: mm04
     TargetName: t04
+  - ModelName: Sphere
+    TargetName: t00
   rules:
+  - pairWiseConditions:
+    - deligateIndex: 1
+      target1Name: t01
+      target2Name: t02
+    - deligateIndex: 1
+      target1Name: t00
+      target2Name: t01
+    showEvents:
+    - modelNames:
+      - 3Piece
+      targetName: t01
+    hideEvents:
+    - modelName: mm01
+    - modelName: mm02
+    - modelName: Sphere
   - pairWiseConditions:
     - deligateIndex: 1
       target1Name: t01
       target2Name: t02
     showEvents:
     - modelNames:
-      - long
+      - 2piece
+      targetName: t01
+    hideEvents:
+    - modelName: mm01
+    - modelName: mm02
+  - pairWiseConditions:
+    - deligateIndex: 1
+      target1Name: t00
+      target2Name: t01
+    showEvents:
+    - modelNames:
+      - Sphere
+      - mm01
       targetName: t01
     hideEvents: []

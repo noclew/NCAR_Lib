@@ -11,7 +11,7 @@ namespace noclew
 		public float angleThreshold = 20;
 		public float distanceThreshold = 10;
 
-		public ARDefaultStateTemplate[] defaultStates;
-		public ARRuleTemplate[] rules;
+		public NCARDefaultState[] defaultStates;
+		public NCARRule[] rules;
 	}
 }

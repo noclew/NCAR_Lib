@@ -8,33 +8,13 @@ using System;
 
 namespace noclew
 {
-	
-
-	[CreateAssetMenu (menuName = "refresh AR database")]
-	public class NCARClasses : ScriptableObject
-	{
-		public enum states
-		{
-			qe,
-			rw,
-			rr
-		}
-
-		[ARObjectList ()]
-		public string card01;
-		public states relation;
-		[ARObjectList ()]
-		public string card02;
-	}
-
-	//////////////////////////////////////////////////////////////////
 
 	/// <summary>
 	/// The conditions.
 	/// </summary>
 
 	[System.Serializable]
-	public class ARTargetConditionTemplate
+	public class ARTargetPairwiseCondition
 	{
 		public int deligateIndex;
 		public string target1Name;
@@ -42,7 +22,7 @@ namespace noclew
 	}
 
 	[System.Serializable]
-	public class NCARShowEventTemplate
+	public class NCARShowEvent
 	{
 		[ModelNameAttribute]
 		public string[] modelNames;
@@ -50,27 +30,31 @@ namespace noclew
 	}
 
 	[System.Serializable]
-	public class NCARHideEventTemplate
+	public class NCARHideEvent
 	{
-		//[ModelNameAttribute]
-		public string targetName;
+		[ModelNameAttribute]
+		public string modelName;
 	}
 
 	[System.Serializable]
-	public class ARRuleTemplate
+	public class NCARRule
 	{
-		public ARTargetConditionTemplate[] pairWiseConditions;
-		public NCARShowEventTemplate[] showEvents;
-		public NCARHideEventTemplate[] hideEvents;
+		public ARTargetPairwiseCondition[] pairWiseConditions;
+		public NCARShowEvent[] showEvents;
+		public NCARHideEvent[] hideEvents;
 	}
 
 	[System.Serializable]
-	public class ARDefaultStateTemplate
+	public class NCARDefaultState
 	{
+		[ModelNameAttribute]
 		public string ModelName;
+		[TargetNameAttribute]
 		public string TargetName;	
 	}
-	//test attr
+
+
+	//attribute to draw models
 	public class ModelNameAttribute : PropertyAttribute
 	{
 		public ModelNameAttribute ()
@@ -78,59 +62,12 @@ namespace noclew
 
 		}
 	}
-
-	//did not use for speed
-	public delegate bool delCondition (GameObject target1, GameObject target2);
-
-
-	/// <summary>
-	/// this class includes all the targets, models, conditions and events.
-	/// </summary>
-
-		
-
-
-
-	///////////////
-	/// 
-	/// 
-	/// no need
-	/// 
-	/// 
-	/// 
-
-
-	public class ARObjectList : PropertyAttribute
+	//attribute to draw models
+	public class TargetNameAttribute : PropertyAttribute
 	{
-		/// <summary>
-		/// Attribute to display custom list
-		/// </summary>
-		public readonly string[] items;
-		public int selected = 0;
-
-		public ARObjectList (string[] sList)
-		{
-			this.items = sList;
-		}
-
-		public ARObjectList ()
-		{
-			Debug.Log ("Dd");
-			this.items = NcHelpers.FindAllARAssetModels ();
-		}
-	}
-
-	[CustomPropertyDrawer (typeof(ARObjectList))]
-	public class ARObjectListDrawer : PropertyDrawer
-	{
-
-		ARObjectList attr{ get { return (ARObjectList)attribute; } }
-
-		public override void OnGUI (Rect position, SerializedProperty prop, GUIContent label)
+		public TargetNameAttribute ()
 		{
 
-			attr.selected = EditorGUI.Popup (EditorGUI.PrefixLabel (position, label), attr.selected, attr.items);
-			prop.stringValue = attr.items [attr.selected];
 		}
 	}
 }

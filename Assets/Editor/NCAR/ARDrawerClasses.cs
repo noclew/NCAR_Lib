@@ -5,10 +5,12 @@ using UnityEditor;
 
 namespace noclew
 {
+
+
 	/// <summary>
 	/// AR condition drawer, derived from PropertyDrawer
 	/// </summary>
-	[CustomPropertyDrawer (typeof(ARTargetConditionTemplate))]
+	[CustomPropertyDrawer (typeof(ARTargetPairwiseCondition))]
 	[CanEditMultipleObjects]
 	public class ARTargetConditionDrawer: PropertyDrawer
 	{
@@ -95,9 +97,10 @@ namespace noclew
 
 			//target2 as GUID
 			int target2_index_old = System.Array.IndexOf (NCARappDB.targetNames, target2.stringValue.ToString());
-			if (target2_index_old == -1)
+			if (target2_index_old == -1) {
 				Debug.Log (" Image Targets are not properly set. Target1 is set to the first target");
 				target2_index_old = 0;
+			}
 			int target2_index_new = EditorGUI.Popup (t2rect, target2_index_old, NCARappDB.targetNames); 
 			target2.stringValue = NCARappDB.targetNames [target2_index_new];
 
@@ -114,7 +117,7 @@ namespace noclew
 	/// <summary>
 	/// AR event drawer.
 	/// </summary>
-	[CustomPropertyDrawer (typeof(NCARShowEventTemplate))]
+	[CustomPropertyDrawer (typeof(NCARShowEvent))]
 	[CanEditMultipleObjects]
 	public class ARShowEventDrawer: PropertyDrawer
 	{
@@ -145,7 +148,7 @@ namespace noclew
 			//
 			Rect posTargetLabel = pos;
 			posTargetLabel.height = 18f; 
-			Rect posTarget = EditorGUI.PrefixLabel (posTargetLabel, new GUIContent ("Show Models On"));
+			Rect posTarget = EditorGUI.PrefixLabel (posTargetLabel, new GUIContent ("Target"));
 			posTarget.height = 18f;
 
 			EditorGUI.indentLevel = 0;
@@ -168,8 +171,6 @@ namespace noclew
 	}
 
 
-
-
 	[CustomPropertyDrawer (typeof(ModelNameAttribute))]
 	public class myModelListDrawer : PropertyDrawer
 	{
@@ -179,11 +180,35 @@ namespace noclew
 		//GUI for property drawer. Calld by Unity
 		public override void OnGUI (Rect pos, SerializedProperty prop, GUIContent label)
 		{
+			Rect posNew = EditorGUI.PrefixLabel (pos, new GUIContent ("Model"));
+
 			int idx_old = System.Array.IndexOf (NCARappDB.sceneModelNames, prop.stringValue.ToString ());
 			if (idx_old == -1)
 				idx_old = 0;
-			int idx_new = EditorGUI.Popup (pos, idx_old, NCARappDB.sceneModelNames);
+			int idx_new = EditorGUI.Popup (posNew, idx_old, NCARappDB.sceneModelNames);
 			prop.stringValue = NCARappDB.sceneModelNames [idx_new];
+
+
+		}
+
+	}
+
+	[CustomPropertyDrawer (typeof(TargetNameAttribute))]
+	public class myTargetListDrawer : PropertyDrawer
+	{
+		// 현재 스콥에서 다루는 attribute 반환
+		ModelNameAttribute attr { get { return (ModelNameAttribute)attribute; } }
+
+		//GUI for property drawer. Calld by Unity
+		public override void OnGUI (Rect pos, SerializedProperty prop, GUIContent label)
+		{
+			Rect posNew = EditorGUI.PrefixLabel (pos, new GUIContent ("Target"));
+
+			int idx_old = System.Array.IndexOf (NCARappDB.targetNames, prop.stringValue.ToString ());
+			if (idx_old == -1)
+				idx_old = 0;
+			int idx_new = EditorGUI.Popup (posNew, idx_old, NCARappDB.targetNames);
+			prop.stringValue = NCARappDB.targetNames [idx_new];
 		}
 
 	}

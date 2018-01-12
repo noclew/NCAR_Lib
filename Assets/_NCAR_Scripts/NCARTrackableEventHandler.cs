@@ -7,9 +7,9 @@ using Vuforia;
 public class NCARTrackableEventHandler : MonoBehaviour, ITrackableEventHandler
 {
 
-	//custom variables
 	ImageTargetBehaviour vImageTargetBehavior;
-
+	//custom variables
+	public bool isTargetConfigured {get; set;}
 	public int targetIndex { get; set; }
 
 	bool isBeingTracked = false;
@@ -73,7 +73,7 @@ public class NCARTrackableEventHandler : MonoBehaviour, ITrackableEventHandler
 
 	protected virtual void Start ()
 	{
-
+		isTargetConfigured = false;
 		//save the default pos and rot
 		posTargetInit = transform.position;
 		rotTargetInit = transform.rotation;

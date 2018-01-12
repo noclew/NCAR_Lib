@@ -33,9 +33,9 @@ namespace noclew{
 
 		static NCARappDB ()
 		{
+			Debug.Log ("-->DB inited");
 			Rebuild ();
 			//TrackSceneChange ();
-			Debug.Log ("-->DB inited");
 		}
 
 		/// <summary>
@@ -43,6 +43,11 @@ namespace noclew{
 		/// </summary>
 		public static void Rebuild ()
 		{
+			//if in playmode, do not update.
+			if (EditorApplication.isPlaying)
+				return;
+			
+			Debug.Log("-->DB Refreshed");
 			//get all scene models and their names
 			sceneModels = GameObject.FindGameObjectsWithTag ("NCAR_model");
 			sceneModelNames = NCARappDB.sceneModels.Select (p => p.name).ToArray ();
@@ -85,7 +90,6 @@ namespace noclew{
 		}
 
 		public static GameObject GetTargetByName( string name){
-//			Debug.Log (name);	
 			int idx = System.Array.IndexOf (NCARappDB.targetNames, name);
 			return NCARappDB.targets [idx];
 		}
